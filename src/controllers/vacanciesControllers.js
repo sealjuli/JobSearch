@@ -22,7 +22,9 @@ class VacanciesControllers {
         })}`
       );
     } catch (error) {
+      console.log(error)
       Sentry.captureException(error);
+      res.status(500).json({ message: "Ошибка при создании вакансии" });
     }
   }
 
@@ -49,8 +51,9 @@ class VacanciesControllers {
       }
       res.send(vacancies);
     } catch (error) {
-      console.log(error);
+      console.log(error)
       Sentry.captureException(error);
+      res.status(500).json({ message: "Ошибка при получении списка вакансий" });
     }
   }
 
@@ -72,7 +75,9 @@ class VacanciesControllers {
         res.send("Вакансия удалена.");
       }
     } catch (error) {
+      console.log(error)
       Sentry.captureException(error);
+      res.status(500).json({ message: "Ошибка удаления вакансии" });
     }
   }
 
@@ -94,7 +99,9 @@ class VacanciesControllers {
         res.send("Вакансия обновлена.");
       }
     } catch (error) {
+      console.log(error)
       Sentry.captureException(error);
+      res.status(500).json({ message: "Ошибка при обновлении вакансии" });
     }
   }
 
@@ -131,7 +138,9 @@ class VacanciesControllers {
         res.send("Вакансии с указанным статусом отсутствуют.");
       }
     } catch (error) {
+      console.log(error)
       Sentry.captureException(error);
+      res.status(500).json({ message: "Ошибка при получении списка вакансии" });
     }
   }
 }

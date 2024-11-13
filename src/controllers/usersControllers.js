@@ -89,6 +89,7 @@ class UsersControllers {
     } catch (error) {
       console.log(error);
       Sentry.captureException(error);
+      res.status(500).json({ message: "Ошибка получения списка студентов" });
     }
   }
 }
