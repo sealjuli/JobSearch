@@ -1,4 +1,5 @@
 const { getConnection, useDefaultDb } = require("../helpers/mongoHelper");
+const role = require("../helpers/role");
 
 class UsersServices {
   #COLLECTION = "users";
@@ -8,7 +9,7 @@ class UsersServices {
     const db = useDefaultDb(connection);
     const users = await db
       .collection(this.#COLLECTION)
-      .aggregate([{ $match: { userType: 'student' } }])
+      .aggregate([{ $match: { userType: role.student } }])
       .toArray();
     connection.close();
     return users;
@@ -23,6 +24,17 @@ class UsersServices {
       .toArray();
     connection.close();
     return user[0];
+  }
+
+  async findTeacher() {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const teacher = await db
+      .collection(this.#COLLECTION)
+      .aggregate([{ $match: { userType: role.teacher } }])
+      .toArray();
+    connection.close();
+    return teacher.length;
   }
 
   async saveUser(user) {

@@ -1,4 +1,5 @@
 const { body, query, param } = require("express-validator");
+const role = require("../helpers/role");
 
 const validateBody = [
   body("date")
@@ -118,7 +119,7 @@ const validateParamStatus = [
 
 const validateUserTypeStudent = [
   query("userType")
-    .equals("student")
+    .equals(role.student)
     .withMessage("Данное действие доступно только для студентов."),
 ];
 

@@ -1,4 +1,5 @@
 const { body, query } = require("express-validator");
+const role = require("../helpers/role");
 
 const validateBodyUser = [
   body("login")
@@ -10,12 +11,12 @@ const validateBodyUser = [
 ];
 
 const validateUserType = body("userType")
-  .isIn(["student", "teacher"])
+  .isIn([role.student, role.teacher])
   .withMessage("Тип пользователя либо student, либо teacher.");
 
 const validateUserTypeTeacher = [
   query("userType")
-    .equals("teacher")
+    .equals(role.teacher)
     .withMessage("Данное действие доступно только для преподавателей."),
 ];
 

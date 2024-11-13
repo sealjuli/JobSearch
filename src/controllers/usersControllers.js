@@ -16,6 +16,14 @@ class UsersControllers {
       const { login, password, userType } = req.body;
 
       // Проверка, что пользователь с таким login не существует
+      const teacherExists = await UsersServices.findTeacher();
+      if (teacherExists) {
+        return res
+          .status(400)
+          .json({ message: "Преподаватель уже зарегестрирован. Пройдите аутентификацию" });
+      }
+
+      // Проверка, что пользователь с таким login не существует
       const existingUser = await UsersServices.findUserByLogin(login);
       if (existingUser) {
         return res

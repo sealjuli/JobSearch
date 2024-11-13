@@ -2,6 +2,7 @@ const VacanciesServices = require("../services/vacanciesServices");
 
 const { validationResult } = require("express-validator");
 const Sentry = require("@sentry/node");
+const role = require("../helpers/role");
 
 class VacanciesControllers {
   async createVacancy(req, res) {
@@ -36,11 +37,9 @@ class VacanciesControllers {
 
     try {
       let vacancies = [];
-      console.log(req.query.userType)
-      if (req.query.userType === "student") {
-        console.log(req.userId)
+      if (req.query.userType === role.student) {
         vacancies = await VacanciesServices.getStudentVacancies(req.userId);
-      } else if (req.query.userType === "teacher") {
+      } else if (req.query.userType === role.teacher) {
         if (req.query.studentId) {
           vacancies = await VacanciesServices.getStudentVacancies(
             req.query.studentId
@@ -114,12 +113,12 @@ class VacanciesControllers {
     try {
       let vacancies = [];
 
-      if (req.query.userType === "student") {
+      if (req.query.userType === role.student) {
         vacancies = await VacanciesServices.getStudentVacanciesByStatus(
           req.userId,
           req.params.status
         );
-      } else if (req.query.userType === "teacher") {
+      } else if (req.query.userType === role.teacher) {
         if (req.query.studentId) {
           vacancies = await VacanciesServices.getStudentVacanciesByStatus(
             req.query.studentId,
