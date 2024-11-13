@@ -3,6 +3,17 @@ const { getConnection, useDefaultDb } = require("../helpers/mongoHelper");
 class UsersServices {
   #COLLECTION = "users";
 
+  async getAllStudents() {
+    const connection = await getConnection();
+    const db = useDefaultDb(connection);
+    const users = await db
+      .collection(this.#COLLECTION)
+      .aggregate([{ $match: { userType: 'student' } }])
+      .toArray();
+    connection.close();
+    return users;
+  }
+
   async findUserByLogin(login) {
     const connection = await getConnection();
     const db = useDefaultDb(connection);

@@ -1,4 +1,4 @@
-const { body } = require("express-validator");
+const { body, query } = require("express-validator");
 
 const validateBodyUser = [
   body("login")
@@ -13,4 +13,14 @@ const validateUserType = body("userType")
   .isIn(["student", "teacher"])
   .withMessage("Тип пользователя либо student, либо teacher.");
 
-module.exports = { validateBodyUser, validateUserType };
+const validateUserTypeTeacher = [
+  query("userType")
+    .equals("teacher")
+    .withMessage("Данное действие доступно только для преподавателей."),
+];
+
+module.exports = {
+  validateBodyUser,
+  validateUserType,
+  validateUserTypeTeacher,
+};

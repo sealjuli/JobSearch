@@ -76,6 +76,21 @@ class UsersControllers {
       res.status(500).json({ message: "Ошибка входа в систему" });
     }
   }
+
+  async getStudents(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const students = await UsersServices.getAllStudents();
+      res.send(students);
+    } catch (error) {
+      console.log(error);
+      Sentry.captureException(error);
+    }
+  }
 }
 
 module.exports = new UsersControllers();

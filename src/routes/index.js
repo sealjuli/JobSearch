@@ -3,6 +3,8 @@ const vacanciesRoutes = require("./vacanciesRoutes");
 const UsersControllers = require("../controllers/usersControllers");
 const validationMiddleware = require("../middleware/validationUser");
 
+const authenticateToken = require("../middleware/authentificateToken");
+
 const router = express.Router();
 router.use("/vacancies", vacanciesRoutes);
 
@@ -111,6 +113,27 @@ router.post(
   "/login",
   validationMiddleware.validateBodyUser,
   UsersControllers.loginUser
+);
+
+/**
+ * @swagger
+ * /api/users/:
+ *   get:
+ *     summary: Получить всех студентов (доступно только преподавателям)
+ *     description: Получение информации о студентах для преподавателей
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Массив студентов
+ */
+router.get(
+  "/users",
+  authenticateToken,
+  validationMiddleware.validateUserTypeTeacher,
+  UsersControllers.getStudents
 );
 
 module.exports = router;

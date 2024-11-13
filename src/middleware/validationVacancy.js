@@ -116,7 +116,7 @@ const validateParamStatus = [
     .withMessage("Статус для фильтрации по вакансиям задан неверно."),
 ];
 
-const validateUserType = [
+const validateUserTypeStudent = [
   query("userType")
     .equals("student")
     .withMessage("Данное действие доступно только для студентов."),
@@ -124,7 +124,7 @@ const validateUserType = [
 
 module.exports = {
   validateBody,
-  validateUserType,
+  validateUserTypeStudent,
   validateOptionalBody,
   validateParamId,
   validateParamStatus,

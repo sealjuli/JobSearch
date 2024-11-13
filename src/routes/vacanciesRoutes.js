@@ -90,7 +90,7 @@ const validationMiddleware = require("../middleware/validationVacancy");
 router.post(
   "/",
   authenticateToken,
-  validationMiddleware.validateUserType,
+  validationMiddleware.validateUserTypeStudent,
   validationMiddleware.validateBody,
   VacanciesControllers.createVacancy
 );
@@ -206,7 +206,7 @@ router.get("/", authenticateToken, VacanciesControllers.getVacancies);
 router.patch(
   "/:id",
   authenticateToken,
-  validationMiddleware.validateUserType,
+  validationMiddleware.validateUserTypeStudent,
   validationMiddleware.validateOptionalBody,
   validationMiddleware.validateParamId,
   VacanciesControllers.updateVacancy
@@ -236,7 +236,7 @@ router.patch(
 router.delete(
   "/:id",
   authenticateToken,
-  validationMiddleware.validateUserType,
+  validationMiddleware.validateUserTypeStudent,
   validationMiddleware.validateParamId,
   VacanciesControllers.deleteVacancy
 );
